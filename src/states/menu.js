@@ -4,23 +4,33 @@ class Menu extends Phaser.State {
     // This is ES6 Standard; it's a simple way
     // to call the constructor from the parent class.
     constructor() {
-	super();
+		super();
     }
 
     // ============ STATE LOADER ============
     // Is the first method to run on the state; its sole
     // purpose is to load the assets you want to use.
     preload() {
-	this.game.load.image('background', 'assets/background.png');
+		this.game.load.image('background', 'assets/background.png');
     }
 
     // =========== STATE CREATION ===========
     // Is the method to create the state and all the objects
     // you want to appear on the state. It only happens once!
     create() {
-	console.log("Menu!");
-	this.background = this.game.add.image(0,0,'background');
-	this.input.onDown.add(this._startGame, this);
+		console.log("Menu!");
+		
+		this.background = this.game.add.image(0,0,'background');
+
+		var style = { font: "bold 32px Arial", fill: "#773ecd", boundsAlignH: "center", boundsAlignV: "middle" };
+		this.text = this.game.add.text(200, 300, "Doodle Fall Revolution 2000", style);
+		this.text.fontsize = 50;		
+
+	    var bounce = this.game.add.tween(this.text);
+		bounce.to({ y: 500 }, 2000, Phaser.Easing.Bounce.In);
+		bounce.start();
+
+		this.input.onDown.add(this._startGame, this);
     }
 
     // ============= GAME LOOP! =============
@@ -34,6 +44,6 @@ class Menu extends Phaser.State {
     // of the class as one of the reserved methods, or things
     // will go awry.
     _startGame () {
-	this.game.state.start('game');
+		this.game.state.start('game');
     }
 }
